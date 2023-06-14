@@ -4,8 +4,11 @@
         <meta charset="utf-8" />
         <title>Conway's Game of Life</title>
         <style>
-            canvas {
-                border: 5px solid black;
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow: hidden;
             }
         </style>
         <script>
@@ -14,6 +17,9 @@
             function init() {
                 const canvas = document.getElementById("conway");
                 var ctx = canvas.getContext("2d");
+                var larger = Math.max(window.innerWidth, window.innerHeight);
+                canvas.width = larger;
+                canvas.height = larger;
                 var xSpace = canvas.width/gridSize;
                 var ySpace = canvas.height/gridSize;
                 canvas.addEventListener("mousedown", function(e)
@@ -97,6 +103,6 @@
         </script>
     </head>
     <body onload="init();" onclick="next();">
-        <canvas id="conway" width="1600" height="1600"></canvas>
+        <canvas id="conway"></canvas>
     </body>
 </html>
