@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Conway's Game of Life</title>
+        <style>
+            canvas {
+                border: 5px solid black;
+            }
+        </style>
+        <script>
+            var board = [];
+            const gridSize = 100;
+            function init() {
+                const canvas = document.getElementById("conway");
+                var ctx = canvas.getContext("2d");
+                var xSpace = canvas.width/gridSize;
+                var ySpace = canvas.height/gridSize;
+                canvas.addEventListener("mousedown", function(e)
+                {
+                    getMousePosition(canvas, e);
+                });
+                for(var i=0;i<gridSize;i++) {
+                    var row = [];
+                    for(var j=0;j<gridSize;j++) {
+                        row[j] = Math.floor(Math.random()*2);
+                        ctx.fillStyle = "rgb(0, 0, 0)";
+                        ctx.fillRect(i*xSpace, j*ySpace, xSpace, ySpace);
+                    }
+                    board[i] = row;
+                }
+                window.requestAnimationFrame(draw);
+            }
+            function draw() {
+                const canvas = document.getElementById("conway");
+                var ctx = canvas.getContext("2d");
+                var xSpace = canvas.width/gridSize;
+                var ySpace = canvas.height/gridSize;
+                for(var i=0;i<gridSize;i++) {
+                    for(var j=0;j<gridSize;j++) {
+                        if(board[i][j]===1) {
+                            ctx.fillStyle = "rgb(255,255,255)";
+                        } else {
+                            ctx.fillStyle = "rgb(0, 0, 0)";
+                        }
+                        ctx.fillRect(i*xSpace, j*ySpace, xSpace, ySpace);
+                    }
+                }
+                window.requestAnimationFrame(draw);
+                next();
+            }
+
+            function numNeighbors(i, j) {
+                n = 0;
+                if (i!==0) {
+                    if(board[i-1][j]===1) {n++}
+                    if(j!==0){if(board[i-1][j-1]===1) {n++}}
+                    if(j!==gridSize-1){if(board[i-1][j+1]===1) {n++}}
+                }
+                if (i!==gridSize-1) {
+                    if(j!==0){if(board[i+1][j-1]===1) {n++}}
+                    if(board[i+1][j]===1) {n++}
+                    if(j!==gridSize-1){if(board[i+1][j+1]===1) {n++}}
+                }
+                if(board[i][j-1]===1 && j!==0) {n++}
+                if(board[i][j+1]===1 && j!==gridSize-1) {n++}
+                if(n===3) {
+                    return 1;
+                } else if(n===2 && board[i][j]===1) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+
+            function next() {
+                var _board = [];
+                for(var i=0;i<gridSize;i++) {
+                    var row = [];
+                    for(var j=0;j<gridSize;j++) {
+                        row[j] = numNeighbors(i, j);
+                    }
+                    _board[i] = row;
+                }
+                board = _board;
+            }
+
+            function getMousePosition(canvas, event) {
+                let rect = canvas.getBoundingClientRect();
+                let x = event.clientX - rect.left;
+                let y = event.clientY - rect.top;
+                board[Math.floor(x/(canvas.width/gridSize))][Math.floor(y/(canvas.height/gridSize))] = 1;
+            }
+            
+            
+
+        </script>
+    </head>
+    <body onload="init();" onclick="next();">
+        <canvas id="conway" width="1600" height="1600"></canvas>
+    </body>
+</html>
