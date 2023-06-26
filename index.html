@@ -55,10 +55,26 @@
                 canvas.height = larger;
                 var xSpace = canvas.width/gridSize;
                 var ySpace = canvas.height/gridSize;
-                canvas.addEventListener("mousedown", function(e)
+                var mouseIsDown = false;
+                var dragState = 0;
+                canvas.onmousedown = function(e)
                 {
-                    getMousePosition(canvas, e);
-                });
+                    mouseIsDown = true;
+                    var pos = getMousePosition(canvas, e);
+                    dragState = board[pos[0]][pos[1]];
+                    console.log(dragState);
+                };
+                canvas.onmouseup = function(e) {
+                    mouseIsDown = false;
+                    var pos = getMousePosition(canvas, e);
+                    setCell(pos[0], pos[1], dragState);
+                }
+                canvas.onmousemove = function(e) {
+                    if(!mouseIsDown) return;
+                    var pos = getMousePosition(canvas, e);
+                    setCell(pos[0], pos[1], dragState);
+                    return false;
+                }
                 window.addEventListener('keydown', function(e)
                 {
                     check(e);
@@ -128,10 +144,14 @@
                 let x = event.clientX - rect.left;
                 let y = event.clientY - rect.top;
                 var celLoc = [Math.floor(x/(canvas.width/gridSize)), Math.floor(y/(canvas.height/gridSize))];
-                if(board[celLoc[0]][celLoc[1]] === 1) {
-                    board[celLoc[0]][celLoc[1]] = 0;
+                return celLoc;
+            }
+
+            function setCell(x, y, state) {
+                if(state === 1) {
+                    board[x][y] = 0;
                 } else {
-                    board[celLoc[0]][celLoc[1]] = 1;
+                    board[x][y] = 1;
                 }
             }
             
