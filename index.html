@@ -3,12 +3,31 @@
     <head>
         <meta charset="utf-8" />
         <title>Conway's Game of Life</title>
+        <link rel="icon" type="image/svg+xml" href="./public/Icon.png" />
         <style>
             html, body {
                 margin: 0;
                 padding: 0;
                 height: 100%;
                 overflow: hidden;
+            }
+
+            .instructions {
+                position: absolute;
+                margin: 1vh;
+                border-radius: 15px;
+                background-color: rgba(250, 235, 215, 0.1);
+                justify-content: left;
+                padding: 3vh;
+                color: red;
+                z-index: 1;
+            }
+
+            canvas {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 0;
             }
         </style>
         <script>
@@ -153,5 +172,13 @@
     </head>
     <body onload="init();" onclick="next();">
         <canvas id="conway"></canvas>
+        <div class="instructions">
+            <u> Key Bindings </u> <br />
+            C Key: Clear all nodes <br />
+            R Key: Reset all nodes randomly <br />
+            P Key: Pause simulation <br />
+            N Key: Iterates once on pause <br />
+            <a href="https://github.com/GauthamRNair/Game-Of-Life" target="_blank">Visit the source code</a>
+        </div>
     </body>
 </html>
