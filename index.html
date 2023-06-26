@@ -12,14 +12,12 @@
                 overflow: hidden;
             }
 
-            .instructions {
+            #instructions {
                 position: absolute;
-                margin: 1vh;
                 border-radius: 15px;
                 background-color: rgba(250, 235, 215, 0.1);
-                justify-content: left;
-                padding: 3vh;
-                color: red;
+                justify-content: center;
+                color: white;
                 z-index: 1;
             }
 
@@ -28,6 +26,21 @@
                 top: 0;
                 left: 0;
                 z-index: 0;
+            }
+            img {
+                border: none;
+                filter: invert(1);
+                padding: none;
+                margin: none;
+            }
+            a {
+                align-items: baseline;
+                text-decoration: none;
+                color: white;
+                font-size: 20px;
+            }
+            dialog::backdrop {
+                backdrop-filter: brightness(0.3);
             }
         </style>
         <script>
@@ -158,6 +171,15 @@
                 paused = !paused;
             }
 
+            function toggleInst() {
+                var inst = document.getElementById("instructions");
+                if (inst.open) {
+                    inst.close();
+                } else {
+                    inst.showModal();
+                }
+            }
+
             function check(e) {
                 var code = e.keyCode;
                 switch (code) {
@@ -165,20 +187,25 @@
                     case 82: fillRandom(); break; //R Key
                     case 80: pauseToggle(); break; //P Key
                     case 78: pauseToggle();next();pauseToggle(); break; //N Key
+                    case 73: toggleInst(); break;
                 }
             }
 
         </script>
     </head>
-    <body onload="init();" onclick="next();">
-        <canvas id="conway"></canvas>
-        <div class="instructions">
+    <body onload="init(); toggleInst();" onclick="next();">
+        <dialog id="instructions">
             <u> Key Bindings </u> <br />
-            C Key: Clear all nodes <br />
-            R Key: Reset all nodes randomly <br />
-            P Key: Pause simulation <br />
-            N Key: Iterates once on pause <br />
-            <a href="https://github.com/GauthamRNair/Game-Of-Life" target="_blank">Visit the source code</a>
-        </div>
+            "C": Clear all cells <br />
+            "R": Reset all cells randomly <br />
+            "P": Pause simulation <br />
+            "N": Iterates once on pause <br />
+            "I": Toggle instructions<br /><br />
+            <a href="https://github.com/GauthamRNair/Game-Of-Life" target="_blank">
+                <img width="15" height="15" src="./public/GithubLogo.png">
+                Source Code
+            </a>
+        </dialog>
+        <canvas id="conway"></canvas>
     </body>
 </html>
