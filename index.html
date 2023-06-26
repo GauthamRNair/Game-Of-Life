@@ -95,7 +95,12 @@
                 let rect = canvas.getBoundingClientRect();
                 let x = event.clientX - rect.left;
                 let y = event.clientY - rect.top;
-                board[Math.floor(x/(canvas.width/gridSize))][Math.floor(y/(canvas.height/gridSize))] = 1;
+                var celLoc = [Math.floor(x/(canvas.width/gridSize)), Math.floor(y/(canvas.height/gridSize))];
+                if(board[celLoc[0]][celLoc[1]] === 1) {
+                    board[celLoc[0]][celLoc[1]] = 0;
+                } else {
+                    board[celLoc[0]][celLoc[1]] = 1;
+                }
             }
             
             function clear() {
