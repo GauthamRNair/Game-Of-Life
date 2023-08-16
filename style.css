@@ -1,0 +1,37 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#instructions {
+    position: absolute;
+    border-radius: 15px;
+    background-color: rgba(250, 235, 215, 0.1);
+    justify-content: center;
+    color: white;
+    z-index: 1;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+img {
+    border: none;
+    filter: invert(1);
+    padding: none;
+    margin: none;
+}
+a {
+    align-items: baseline;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+dialog::backdrop {
+    backdrop-filter: brightness(0.3);
+}
